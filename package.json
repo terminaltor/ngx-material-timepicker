@@ -1,6 +1,6 @@
 {
-    "name": "ngx-material-timepicker",
-    "description": "Handy material design timepicker for angular",
+    "name": "ngx-material-timepicker-decon",
+    "description": "Handy material design timepicker for angular DECONied",
     "version": "3.1.0",
     "license": "MIT",
     "author": "Vitalii Boiko <boyko330@gmail.com>",
@@ -20,10 +20,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/Agranom/ngx-material-timepicker.git"
+        "url": "https://github.com/terminaltor/ngx-material-timepicker"
     },
     "bugs": {
-        "url": "https://github.com/Agranom/ngx-material-timepicker/issues"
+        "url": "https://github.com/terminaltor/ngx-material-timepicker/issues"
     },
     "scripts": {
         "ng": "ng",

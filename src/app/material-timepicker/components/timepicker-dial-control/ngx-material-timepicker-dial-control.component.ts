@@ -48,6 +48,7 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
     }
 
     updateTime(): void {
+        this.time = parseInt(this.time, 10).toString().padStart(2, '0');
         const time = this.selectedTime;
         if (time) {
             this.timeChanged.next(time);
@@ -66,13 +67,22 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
     onKeyDown(e: KeyboardEvent): void {
         const char = String.fromCharCode(e.keyCode);
 
-
-        if ((!isInputAllowed(e)) || isTimeDisabledToChange(this.time, char, this.timeList)) {
-            e.preventDefault();
-        }
-
         if (isInputAllowed(e)) {
+            if (isTimeDisabledToChange(this.time, char, this.timeList)) {
+                if (!isTimeUnavailable(char, this.timeList)) {
+                    e.preventDefault();
+                    this.time = char;
+                    this.updateTime();
+                }
+            } else {
+                e.preventDefault();
+                this.time += char;
+                this.updateTime();
+                this.formatTime();
+            }
             this.changeTimeByArrow(e.keyCode);
+        } else {
+            e.preventDefault();
         }
     }
 

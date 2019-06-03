@@ -21,7 +21,7 @@ Timepicker uses lightweight Date library [luxon](https://moment.github.io/luxon/
 
 Install timepicker through npm:
 ```angular2html
-npm install --save ngx-material-timepicker
+npm install --save ngx-material-timepicker-decon
 ```
 Next import the timepicker module into your app's module:
 ```typescript
