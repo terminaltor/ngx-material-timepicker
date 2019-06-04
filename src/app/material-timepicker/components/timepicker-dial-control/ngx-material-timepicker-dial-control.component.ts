@@ -12,6 +12,7 @@ import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
 
     previousTime: number | string;
+    shouldFocus = false;
 
     @Input() timeList: ClockFaceTime[];
     @Input() timeUnit: TimeUnit;
@@ -65,7 +66,7 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
     }
 
     onKeyDown(e: KeyboardEvent): void {
-        const char = String.fromCharCode(e.keyCode);
+        const char = e.key || String.fromCharCode(e.which || e.keyCode);
 
         if (isInputAllowed(e)) {
             if (isTimeDisabledToChange(this.time, char, this.timeList)) {
@@ -73,15 +74,31 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
                     e.preventDefault();
                     this.time = char;
                     this.updateTime();
+                    this.shouldFocus = true;
                 }
             } else {
                 e.preventDefault();
                 this.time += char;
                 this.updateTime();
                 this.formatTime();
+                const input = <HTMLInputElement>e.target;
+                if (this.shouldFocus) {
+                    try {
+                        const nextInput = <HTMLInputElement>input.parentNode.nextSibling.nextSibling.childNodes.item(0);
+                        nextInput.focus();
+                    } catch (e) {
+                        try {
+                            const prevInput = <HTMLInputElement>input.parentNode.previousSibling.previousSibling.childNodes.item(0);
+                            prevInput.focus();
+                        } catch (e) {
+                        }
+                    }
+                }
+                this.shouldFocus = false;
             }
             this.changeTimeByArrow(e.keyCode);
         } else {
+            this.shouldFocus = false;
             e.preventDefault();
         }
     }
