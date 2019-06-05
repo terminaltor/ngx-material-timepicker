@@ -2,6 +2,8 @@
 <div class="timepicker-overlay" *ngIf="isOpened">
     <div class="timepicker" [@timepicker]="animationState" (@timepicker.done)="animationDone($event)">
         <header class="timepicker__header">
+            <img src="assets/clock.svg" *ngIf="keyboardType === keyboardTypes.CLOCK" (click)="keyboardType = keyboardTypes.NUMPAD">
+            <img src="assets/numpad.svg" *ngIf="keyboardType === keyboardTypes.NUMPAD" (click)="keyboardType = keyboardTypes.CLOCK">
             <ngx-material-timepicker-dial [format]="format" [hour]="selectedHour?.time"
                                           [minute]="selectedMinute?.time"
                                           [period]="selectedPeriod" [activeTimeUnit]="activeTimeUnit"
@@ -16,34 +18,39 @@
             ></ngx-material-timepicker-dial>
         </header>
         <div class="timepicker__main-content">
-            <div class="timepicker__body" [ngSwitch]="activeTimeUnit">
-                <div *ngSwitchCase="timeUnit.HOUR">
-                    <ngx-material-timepicker-24-hours-face *ngIf="format === 24;else ampmHours"
-                                                           (hourChange)="onHourChange($event)"
-                                                           [selectedHour]="selectedHour"
-                                                           [minTime]="minTime"
-                                                           [maxTime]="maxTime"
-                                                           [format]="format"
-                                                           (hourSelected)="onHourSelected($event)"></ngx-material-timepicker-24-hours-face>
-                    <ng-template #ampmHours>
-                        <ngx-material-timepicker-12-hours-face
-                            (hourChange)="onHourChange($event)"
-                            [selectedHour]="selectedHour"
-                            [period]="selectedPeriod"
-                            [minTime]="minTime"
-                            [maxTime]="maxTime"
-                            (hourSelected)="onHourSelected($event)"></ngx-material-timepicker-12-hours-face>
-                    </ng-template>
+            <div *ngIf="keyboardType === keyboardTypes.CLOCK">
+                <div class="timepicker__body" [ngSwitch]="activeTimeUnit">
+                    <div *ngSwitchCase="timeUnit.HOUR">
+                        <ngx-material-timepicker-24-hours-face *ngIf="format === 24;else ampmHours"
+                                                               (hourChange)="onHourChange($event)"
+                                                               [selectedHour]="selectedHour"
+                                                               [minTime]="minTime"
+                                                               [maxTime]="maxTime"
+                                                               [format]="format"
+                                                               (hourSelected)="onHourSelected($event)"></ngx-material-timepicker-24-hours-face>
+                        <ng-template #ampmHours>
+                            <ngx-material-timepicker-12-hours-face
+                                (hourChange)="onHourChange($event)"
+                                [selectedHour]="selectedHour"
+                                [period]="selectedPeriod"
+                                [minTime]="minTime"
+                                [maxTime]="maxTime"
+                                (hourSelected)="onHourSelected($event)"></ngx-material-timepicker-12-hours-face>
+                        </ng-template>
+                    </div>
+                    <ngx-material-timepicker-minutes-face *ngSwitchCase="timeUnit.MINUTE"
+                                                          [selectedMinute]="selectedMinute"
+                                                          [selectedHour]="selectedHour?.time"
+                                                          [minTime]="minTime"
+                                                          [maxTime]="maxTime"
+                                                          [format]="format"
+                                                          [period]="selectedPeriod"
+                                                          [minutesGap]="minutesGap"
+                                                          (minuteChange)="onMinuteChange($event)"></ngx-material-timepicker-minutes-face>
                 </div>
-                <ngx-material-timepicker-minutes-face *ngSwitchCase="timeUnit.MINUTE"
-                                                      [selectedMinute]="selectedMinute"
-                                                      [selectedHour]="selectedHour?.time"
-                                                      [minTime]="minTime"
-                                                      [maxTime]="maxTime"
-                                                      [format]="format"
-                                                      [period]="selectedPeriod"
-                                                      [minutesGap]="minutesGap"
-                                                      (minuteChange)="onMinuteChange($event)"></ngx-material-timepicker-minutes-face>
+            </div>
+            <div *ngIf="keyboardType === keyboardTypes.NUMPAD">
+                <timepicker-numpad (keyPressed)="numPadPressed($event)"></timepicker-numpad>
             </div>
             <div class="timepicker__actions">
                 <div (click)="close()">

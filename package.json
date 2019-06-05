@@ -89,5 +89,8 @@
         "tslint": "~5.9.1",
         "typescript": "3.1.6",
         "zone.js": "^0.8.26"
+    },
+    "dependencies": {
+        "simple-keyboard": "^2.22.0"
     }
 }

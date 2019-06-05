@@ -27,6 +27,7 @@ import { TimeFormatterPipe } from './pipes/time-formatter.pipe';
 import { OverlayDirective } from './directives/overlay.directive';
 import { MinutesFormatterPipe } from './pipes/minutes-formatter.pipe';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { TimepickerNumpadComponent } from './components/timepicker-numpad/timepicker-numpad.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AutofocusDirective } from './directives/autofocus.directive';
         NgxMaterialTimepickerDialComponent,
         NgxMaterialTimepickerDialControlComponent,
         NgxMaterialTimepickerPeriodComponent,
+        TimepickerNumpadComponent,
         StyleSanitizerPipe,
         TimeFormatterPipe,
         TimepickerDirective,

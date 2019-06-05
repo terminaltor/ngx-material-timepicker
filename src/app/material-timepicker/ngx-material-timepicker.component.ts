@@ -14,7 +14,10 @@ export enum AnimationState {
     ENTER = 'enter',
     LEAVE = 'leave'
 }
-
+export enum KeyboardTypes {
+    'NUMPAD',
+    'CLOCK'
+}
 
 const ESCAPE = 27;
 
@@ -48,6 +51,8 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     isOpened = false;
     animationState: AnimationState;
 
+    keyboardTypes = KeyboardTypes;
+
     @Input() cancelBtnTmpl: TemplateRef<Node>;
     @Input() editableHintTmpl: TemplateRef<Node>;
     @Input() confirmBtnTmpl: TemplateRef<Node>;
@@ -55,6 +60,7 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     @Input() enableKeyboardInput: boolean;
     @Input() preventOverlayClick: boolean;
     @Input() disableAnimation: boolean;
+    @Input() keyboardType: KeyboardTypes = KeyboardTypes.NUMPAD;
 
     @Input()
     set minutesGap(gap: number) {
@@ -199,5 +205,11 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
         this.isOpened = false;
         this.activeTimeUnit = TimeUnit.HOUR;
         this.closed.next();
+    }
+
+    numPadPressed(event) {
+        console.log(event);
+        const keyBoardEvent = new KeyboardEvent('keypress', {ctrlKey: true, key: event});
+        this.eventService.dispatchEvent(keyBoardEvent);
     }
 }
