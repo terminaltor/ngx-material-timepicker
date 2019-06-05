@@ -22,7 +22,7 @@ export class TimepickerNumpadComponent implements AfterViewInit {
             },
             theme: 'hg-theme-default hg-layout-numeric numeric-theme',
             display: {
-                'delete': 'מחק',
+                'delete': '<i _ngcontent-c1 class="icon-backspace"></i>',
             }
         });
     }
