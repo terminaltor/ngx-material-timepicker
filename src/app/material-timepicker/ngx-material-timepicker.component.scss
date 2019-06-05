@@ -34,6 +34,7 @@
     z-index: 999;
     pointer-events: auto;
     &__header {
+        color: white;
         padding: 15px 30px;
         background-color: $dial-background-color;
         @supports (background-color: var(--dial-background-color)) {
