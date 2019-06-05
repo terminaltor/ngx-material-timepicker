@@ -208,11 +208,15 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     }
 
     numPadPressed(k: string) {
+        const tmp = document.createElement('input');
+        document.body.appendChild(tmp);
+        tmp.focus();
+        document.body.removeChild(tmp);
         this.timepickerService.keyboardClick.emit(new KeyboardEvent('keypress', <any>{
             ctrlKey: true,
             key: k,
-            charCode: k.charCodeAt(0),
-            keyCode: k.charCodeAt(0)
+            charCode: k === 'Backspace' ? 46 : k.charCodeAt(0),
+            keyCode: k === 'Backspace' ? 46 : k.charCodeAt(0)
         }));
     }
 }

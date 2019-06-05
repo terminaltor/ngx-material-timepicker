@@ -18,11 +18,11 @@ export class TimepickerNumpadComponent implements AfterViewInit {
         this.keyboard = new Keyboard({
             onKeyPress: button => this.onKeyPress(button),
             layout: {
-                default: ['1 2 3', '4 5 6', '7 8 9', '. 0 delete'],
+                default: ['1 2 3', '4 5 6', '7 8 9', '. 0 Backspace'],
             },
             theme: 'hg-theme-default hg-layout-numeric numeric-theme',
             display: {
-                'delete': '<i _ngcontent-c1 class="icon-backspace"></i>',
+                'Backspace': '<i _ngcontent-c1 class="icon-backspace"></i>',
             }
         });
     }
