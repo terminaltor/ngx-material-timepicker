@@ -207,9 +207,12 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
         this.closed.next();
     }
 
-    numPadPressed(event) {
-        console.log(event);
-        const keyBoardEvent = new KeyboardEvent('keypress', {ctrlKey: true, key: event});
-        this.eventService.dispatchEvent(keyBoardEvent);
+    numPadPressed(k: string) {
+        this.timepickerService.keyboardClick.emit(new KeyboardEvent('keypress', <any>{
+            ctrlKey: true,
+            key: k,
+            charCode: k.charCodeAt(0),
+            keyCode: k.charCodeAt(0)
+        }));
     }
 }

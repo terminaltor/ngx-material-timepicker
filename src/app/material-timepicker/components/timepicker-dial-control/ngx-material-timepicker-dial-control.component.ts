@@ -1,15 +1,17 @@
 /* tslint:disable:triple-equals */
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ClockFaceTime } from '../../models/clock-face-time.interface';
 import { TimeUnit } from '../../models/time-unit.enum';
 import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
+import { NgxMaterialTimepickerService } from '../../services/ngx-material-timepicker.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'ngx-material-timepicker-dial-control',
     templateUrl: 'ngx-material-timepicker-dial-control.component.html',
     styleUrls: ['ngx-material-timepicker-dial-control.component.scss']
 })
-export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
+export class NgxMaterialTimepickerDialControlComponent implements OnChanges, OnDestroy {
 
     previousTime: number | string;
     shouldFocus = false;
@@ -25,6 +27,19 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
     @Output() timeChanged = new EventEmitter<ClockFaceTime>();
     @Output() focused = new EventEmitter<null>();
     @Output() unfocused = new EventEmitter<null>();
+
+    @ViewChild('inputElement') inputElement: ElementRef;
+    eventListener: Subscription;
+
+    constructor(
+        private TimepickerService: NgxMaterialTimepickerService
+    ) {
+        this.eventListener = this.TimepickerService.keyboardClick.subscribe(e => {
+            if (this.isActive && this.isEditable) {
+                this.onKeyDown(e);
+            }
+        });
+    }
 
     private get selectedTime(): ClockFaceTime {
         if (!!this.time) {
@@ -74,6 +89,7 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
                     e.preventDefault();
                     this.time = char;
                     this.updateTime();
+                    this.formatTime();
                     this.shouldFocus = true;
                 }
             } else {
@@ -81,18 +97,22 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
                 this.time += char;
                 this.updateTime();
                 this.formatTime();
-                const input = <HTMLInputElement>e.target;
+                const input = <HTMLInputElement>(e.target || this.inputElement.nativeElement);
                 if (this.shouldFocus) {
-                    try {
-                        const nextInput = <HTMLInputElement>input.parentNode.nextSibling.nextSibling.childNodes.item(0);
-                        nextInput.focus();
-                    } catch (e) {
+                    setTimeout(() => {
                         try {
-                            const prevInput = <HTMLInputElement>input.parentNode.previousSibling.previousSibling.childNodes.item(0);
-                            prevInput.focus();
+                            const nextInput = <HTMLInputElement>input.parentNode.nextSibling.nextSibling.childNodes.item(0);
+                            this.unfocused.emit();
+                            nextInput.focus();
                         } catch (e) {
+                            try {
+                                const prevInput = <HTMLInputElement>input.parentNode.previousSibling.previousSibling.childNodes.item(0);
+                                this.unfocused.emit();
+                                prevInput.focus();
+                            } catch (e) { }
                         }
-                    }
+                        this.formatTime();
+                    }, 0);
                 }
                 this.shouldFocus = false;
             }
@@ -101,6 +121,10 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges {
             this.shouldFocus = false;
             e.preventDefault();
         }
+    }
+
+    ngOnDestroy() {
+        this.eventListener.unsubscribe();
     }
 
     private changeTimeByArrow(keyCode: number): void {

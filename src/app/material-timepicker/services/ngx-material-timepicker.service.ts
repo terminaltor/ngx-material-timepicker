@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ClockFaceTime } from '../models/clock-face-time.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TimePeriod } from '../models/time-period.enum';
@@ -23,7 +23,7 @@ export class NgxMaterialTimepickerService {
     private hourSubject = new BehaviorSubject<ClockFaceTime>(DEFAULT_HOUR);
     private minuteSubject = new BehaviorSubject<ClockFaceTime>(DEFAULT_MINUTE);
     private periodSubject = new BehaviorSubject<TimePeriod>(TimePeriod.AM);
-
+    public keyboardClick = new EventEmitter<KeyboardEvent>();
 
     set hour(hour: ClockFaceTime) {
         this.hourSubject.next(hour);

@@ -28,6 +28,7 @@ export class TimepickerNumpadComponent implements AfterViewInit {
     }
 
     onKeyPress = (button: string) => {
+        // console.log(button);
         this.keyPressed.emit(button);
     }
 
