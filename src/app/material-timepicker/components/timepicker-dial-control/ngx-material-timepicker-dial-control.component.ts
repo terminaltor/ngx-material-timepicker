@@ -5,6 +5,7 @@ import { TimeUnit } from '../../models/time-unit.enum';
 import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 import { NgxMaterialTimepickerService } from '../../services/ngx-material-timepicker.service';
 import { Subscription } from 'rxjs';
+import { NgxMaterialTimepickerComponent } from '../../ngx-material-timepicker.component';
 
 @Component({
     selector: 'ngx-material-timepicker-dial-control',
@@ -39,6 +40,11 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges, OnD
                 this.onKeyDown(e);
             }
         });
+    }
+
+    blurAll($event) {
+        NgxMaterialTimepickerComponent.blurAll();
+        $event.preventDefault();
     }
 
     private get selectedTime(): ClockFaceTime {
@@ -120,7 +126,6 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges, OnD
                 }
                 this.shouldFocus = false;
             }
-            this.changeTimeByArrow(e.keyCode);
         } else {
             this.shouldFocus = false;
             e.preventDefault();
@@ -129,23 +134,6 @@ export class NgxMaterialTimepickerDialControlComponent implements OnChanges, OnD
 
     ngOnDestroy() {
         this.eventListener.unsubscribe();
-    }
-
-    private changeTimeByArrow(keyCode: number): void {
-        const ARROW_UP = 38;
-        const ARROW_DOWN = 40;
-        let time: string;
-
-        if (keyCode === ARROW_UP) {
-            time = String(+this.time + (this.minutesGap || 1));
-        } else if (keyCode === ARROW_DOWN) {
-            time = String(+this.time - (this.minutesGap || 1));
-        }
-
-        if (!isTimeUnavailable(time, this.timeList)) {
-            this.time = time;
-            this.updateTime();
-        }
     }
 
 }

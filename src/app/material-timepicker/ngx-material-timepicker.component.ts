@@ -100,6 +100,13 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
 
     }
 
+    public static blurAll() {
+        const tmp = document.createElement('input');
+        document.body.appendChild(tmp);
+        tmp.focus();
+        document.body.removeChild(tmp);
+    }
+
     get minTime(): string | DateTime {
         return this.timepickerInput && this.timepickerInput.min;
     }
@@ -208,10 +215,7 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     }
 
     numPadPressed(k: string) {
-        const tmp = document.createElement('input');
-        document.body.appendChild(tmp);
-        tmp.focus();
-        document.body.removeChild(tmp);
+        NgxMaterialTimepickerComponent.blurAll();
         this.timepickerService.keyboardClick.emit(new KeyboardEvent('keypress', <any>{
             ctrlKey: true,
             key: k,
