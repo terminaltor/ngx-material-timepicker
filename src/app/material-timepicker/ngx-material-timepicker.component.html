@@ -2,6 +2,7 @@
 <div class="timepicker-overlay" *ngIf="isOpened">
     <div class="timepicker" [@timepicker]="animationState" (@timepicker.done)="animationDone($event)">
         <header class="timepicker__header">
+            <button class="hidden-button"></button>
             <i class="icon-clock" *ngIf="keyboardType === keyboardTypes.NUMPAD" (click)="keyboardType = keyboardTypes.CLOCK"></i>
             <i class="icon-keypad" *ngIf="keyboardType === keyboardTypes.CLOCK" (click)="keyboardType = keyboardTypes.NUMPAD"></i>
             <ngx-material-timepicker-dial [format]="format" [hour]="selectedHour?.time"

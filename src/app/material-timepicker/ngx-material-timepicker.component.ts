@@ -101,10 +101,14 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     }
 
     public static blurAll() {
-        const tmp = document.createElement('input');
-        document.body.appendChild(tmp);
-        tmp.focus();
-        document.body.removeChild(tmp);
+        // const tmp = document.createElement('input');
+        // document.body.appendChild(tmp);
+        // tmp.focus();
+        // document.body.removeChild(tmp);
+        const btn: HTMLButtonElement = document.querySelector('.hidden-button');
+        if (btn) {
+            btn.focus();
+        }
     }
 
     get minTime(): string | DateTime {
