@@ -1,7 +1,7 @@
 {
     "name": "ngx-material-timepicker-decon",
     "description": "Handy material design timepicker for angular DECONied",
-    "version": "3.2.5",
+    "version": "3.2.6",
     "license": "MIT",
     "author": "Vitalii Boiko <boyko330@gmail.com>",
     "keywords": [
@@ -33,7 +33,8 @@
         "test": "ng test --watch=false --code-coverage --browsers ChromeHeadlessNoSandbox",
         "test:watch": "ng test --watch=true --browsers ChromeHeadlessNoSandbox --code-coverage",
         "codecov": "codecov",
-        "packagr": "ng-packagr -p ng-package.json",
+        "packagr": "ng-packagr -p ng-package.json && npm run postpackage",
+        "postpackage": "cp -R src/app/material-timepicker/assets dist/src/app/material-timepicker",
         "publish": "run-s packagr && npm publish dist",
         "gh-publish": "ng build --prod --base-href ngx-material-timepicker && gh-pages -d dist"
     },
