@@ -8,7 +8,7 @@
     font-weight: normal;
     font-style: normal;
 }
-.timepicker-overlay::ng-deep, & {
+@mixin font() {
     [class*='decontimepicker-']:before {
         display: inline-block;
         font-family: 'decontimepicker';
@@ -30,6 +30,10 @@
     .decontimepicker-keypad:before {
         content: '\0043';
     }
+}
+font();
+.timepicker-overlay::ng-deep {
+    font();
 }
 
 .simple-keyboard {
