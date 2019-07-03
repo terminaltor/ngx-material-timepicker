@@ -31,9 +31,9 @@
         content: '\0043';
     }
 }
-font();
+@include font();
 .timepicker-overlay::ng-deep {
-    font();
+    @include font();
 }
 
 .simple-keyboard {
