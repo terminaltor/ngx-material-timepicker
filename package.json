@@ -34,7 +34,7 @@
         "test:watch": "ng test --watch=true --browsers ChromeHeadlessNoSandbox --code-coverage",
         "codecov": "codecov",
         "packagr": "ng-packagr -p ng-package.json && npm run postpackage",
-        "postpackage": "cp -R src/app/material-timepicker/assets dist/src/app/material-timepicker",
+        "postpackage": "cp -R src/app/material-timepicker/assets dist/esm5/src/app/material-timepicker && cp -R src/app/material-timepicker/assets dist/esm2015/src/app/material-timepicker",
         "publish": "run-s packagr && npm publish dist",
         "gh-publish": "ng build --prod --base-href ngx-material-timepicker && gh-pages -d dist"
     },
