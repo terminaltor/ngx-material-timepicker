@@ -8,18 +8,29 @@
     font-weight: normal;
     font-style: normal;
 }
-[class*='decontimepicker-']:before{
-    display: inline-block;
-    font-family: 'decontimepicker';
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+.timepicker-overlay::ng-deep, & {
+    [class*='decontimepicker-']:before {
+        display: inline-block;
+        font-family: 'decontimepicker';
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    .decontimepicker-backspace:before {
+        content: '\0041';
+    }
+
+    .decontimepicker-clock:before {
+        content: '\0042';
+    }
+
+    .decontimepicker-keypad:before {
+        content: '\0043';
+    }
 }
-.decontimepicker-backspace:before{content:'\0041';}
-.decontimepicker-clock:before{content:'\0042';}
-.decontimepicker-keypad:before{content:'\0043';}
 
 .simple-keyboard {
     font-family: HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
