@@ -61,6 +61,7 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
     @Input() preventOverlayClick: boolean;
     @Input() disableAnimation: boolean;
     @Input() keyboardType: KeyboardTypes = KeyboardTypes.NUMPAD;
+    @Output() keyboardTypeChanged: EventEmitter<KeyboardTypes> = new EventEmitter();
 
     @Input()
     set minutesGap(gap: number) {
@@ -136,6 +137,11 @@ export class NgxMaterialTimepickerComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.timepickerService.selectedPeriod
             .subscribe(period => this.selectedPeriod = period));
+    }
+
+    changeKeyboardType(type: KeyboardTypes) {
+        this.keyboardType = type;
+        this.keyboardTypeChanged.emit(type);
     }
 
     /***

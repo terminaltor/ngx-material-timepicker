@@ -3,8 +3,12 @@
     <div class="timepicker" [@timepicker]="animationState" (@timepicker.done)="animationDone($event)">
         <header class="timepicker__header">
             <button class="hidden-button"></button>
-            <i class="decontimepicker-clock" *ngIf="keyboardType === keyboardTypes.NUMPAD" (click)="keyboardType = keyboardTypes.CLOCK"></i>
-            <i class="decontimepicker-keypad" *ngIf="keyboardType === keyboardTypes.CLOCK" (click)="keyboardType = keyboardTypes.NUMPAD"></i>
+            <button class="change-type-button" *ngIf="keyboardType === keyboardTypes.NUMPAD" (click)="changeKeyboardType(keyboardTypes.CLOCK)">
+                <i class="decontimepicker-clock"></i>
+            </button>
+            <button class="change-type-button" *ngIf="keyboardType === keyboardTypes.CLOCK" (click)="changeKeyboardType(keyboardTypes.NUMPAD)">
+                <i class="decontimepicker-keypad"></i>
+            </button>
             <ngx-material-timepicker-dial [format]="format" [hour]="selectedHour?.time"
                                           [minute]="selectedMinute?.time"
                                           [period]="selectedPeriod" [activeTimeUnit]="activeTimeUnit"
